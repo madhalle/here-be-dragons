@@ -11,28 +11,27 @@ class NytimesTest < Minitest::Test
   end
 
   def test_it_can_get_copyright
-    #Set your code to the local variable, "result"
-
-    assert result, "Copyright (c) 2018 The New York Times Company. All Rights Reserved."
+    assert @hash[:copyright], "Copyright (c) 2018 The New York Times Company. All Rights Reserved."
   end
 
   def test_it_can_get_array_of_stories
-    #Set your code to the local variable, "result"
-
-    assert result.is_a? (Array)
-    assert_equal 44, result.count
+    assert @hash[:results].is_a? (Array)
+    assert_equal 44, @hash[:results].count
   end
 
   def test_it_can_get_all_stories_with_subsection_of_politics
-    #Set your code to the local variable, "result"
-
-
-    assert result.is_a? (Array)
-    assert_equal 6, result.count
+    politics = []
+    @hash[:results].each do |result|
+      if result[:subsection]== "Politics"
+        politics << result
+      end
+    end
+    assert politics.is_a? (Array)
+    assert_equal 6, politics.count
     assert_equal "Congressional G.O.P. Agenda Quietly Falls Into Place Even as Trump Steals the Spotlight",
-      result.first[:title]
+      politics.first[:title]
     assert_equal "Conspiracy Theories Made Alex Jones Very Rich. They May Bring Him Down.",
-      result.last[:title]
+      politics.last[:title]
   end
 
 end
